@@ -22,7 +22,6 @@ public class Person { // User on hõivatud PostgreSQL tasandil
     private String email;
     private String password;
     @Column(unique = true)
-    private String personalCode;
 
     // {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     // CascadeType --> CascadeType.REMOVE   kui kustutatakse Person, siis kustutatakse ka Address

@@ -3,7 +3,6 @@ package ee.maik.veebipood.controller;
 import ee.maik.veebipood.dto.PersonLoginRecordDto;
 import ee.maik.veebipood.entity.Person;
 import ee.maik.veebipood.repository.PersonRepository;
-import ee.maik.veebipood.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +14,6 @@ public class PersonController {
     @Autowired
     private PersonRepository personRepository;
 
-    // Dependency Injection. Kui luuakse see klass (PersonController), seotakse ära samal ajal
-    // temaga kõik allolevad muutujad
-    // Injectiga võib ka läbi ka constructorite
-    @Autowired
-    private PersonService personService;
-
     @GetMapping("persons")
     public List<Person> getPersons(){
         return personRepository.findAll();
@@ -28,13 +21,14 @@ public class PersonController {
 
     @DeleteMapping("persons/{id}")
     public List<Person> deletePerson(@PathVariable Long id){
-        personRepository.deleteById(id); // kustutan
-        return personRepository.findAll(); // uuenenud seis
+        personRepository.deleteById(id);
+        return personRepository.findAll();
     }
 
     @PostMapping("signup")
     public Person signup(@RequestBody Person person){
-        personService.validate(person);
+        // Kuna Service'it enam pole, läheb kontrollimata otse andmebaasi.
+        // Testimiseks on see hetkel parim lahendus!
         return personRepository.save(person);
     }
 
